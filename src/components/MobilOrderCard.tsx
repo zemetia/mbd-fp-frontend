@@ -6,21 +6,26 @@ import Button from '@/components/buttons/Button';
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/typography/Typography';
 import { formatToRupiah } from '@/lib/currency';
+import { Mobil } from '@/types/entities/mobil';
 
 type MobilOrderCardProps = {
   image?: string | undefined;
+  id: string;
   namaMobil: string;
   tipePerseneling: string;
   jumlahPenumpang: number;
   harga: number;
+  dataMobil: Mobil;
 };
 
 export default function MobilOrderCard({
   image,
+  id,
   namaMobil,
   tipePerseneling,
   jumlahPenumpang,
   harga,
+  dataMobil,
 }: MobilOrderCardProps) {
   const router = useRouter();
   return (
@@ -51,7 +56,15 @@ export default function MobilOrderCard({
           <Typography variant='h6'>{formatToRupiah(harga)}/Day</Typography>
           <Button
             className='bg-[#9EE6AA] text-black hover:bg-[#80b989] active:bg-[#a9ffb8]'
-            onClick={() => router.push('/mobil/1')}
+            onClick={() =>
+              router.push(
+                {
+                  pathname: `/mobil/${id}`,
+                  query: { data: JSON.stringify(dataMobil) },
+                },
+                `/mobil/${id}`
+              )
+            }
           >
             Lanjutkan
           </Button>

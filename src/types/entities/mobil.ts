@@ -1,16 +1,20 @@
 export type Mobil = {
-  id: string;
+  ID: string;
   nama: string;
   price: number;
-  pelat_no: string;
+  pelat: string;
   kapasitas_penumpang: number;
   status: boolean;
   kapasitas_mesin: number;
-  photo_url: string;
+  photo_url?: string;
   user_id: string;
   tipe_mobil_id: number;
   tipe_persneling_id: number;
   tipe_mesin_id: number;
+  tipe_mobil?: string;
+  tipe_persneling?: string;
+  tipe_mesin?: string;
   lokasi_id: string;
+  lokasi?: string;
   rating: number;
 };

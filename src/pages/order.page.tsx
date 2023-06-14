@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import MobilOrderCard from '@/components/MobilOrderCard';
 import NonFormCheckbox from '@/components/NonFormCheckbox';
@@ -9,19 +9,22 @@ import Typography from '@/components/typography/Typography';
 import useMutationToast from '@/hooks/toast/useMutationToast';
 import Layout from '@/layouts/Layout';
 import api from '@/lib/api';
-import useMobilStore from '@/store/useMobilStore';
 import { RequestLokasiDto } from '@/types/entities/lokasi';
+import { Mobil } from '@/types/entities/mobil';
 
 export default function OrderPage() {
   const router = useRouter();
   const lokasi: string = router.query.lokasi?.toString() ?? '';
-  const mobilStore = useMobilStore();
+  const tglAmbil: string = router.query.tgl_ambil?.toString() ?? '';
+  const tglKembali: string = router.query.tgl_kembali?.toString() ?? '';
+  const [mobils, setMobils] = useState<Array<Mobil>>();
 
   const { mutate, isLoading } = useMutationToast<void, RequestLokasiDto>(
     useMutation(async (data) => {
-      console.log('dari usemutation', data);
+      data.isPickup = false;
+      data.dist = 15;
       const res = await api.get(`/lokasi`, { params: data });
-      console.log(res);
+      setMobils(res.data.data);
 
       return res;
     })
@@ -84,46 +87,23 @@ export default function OrderPage() {
           <div className='grow flex flex-col gap-3'>
             <div className='shadow-lg bg-white rounded-lg p-5 overflow-hidden bg-[url("/images/order-search.png")] bg-no-repeat'>
               <div className='z-10'>
-                Surabaya {isLoading ? 'yes' : 'no'}
-                <br /> tests <br /> test lagi <br /> test lagi
+                <Typography variant='h4'>{lokasi}</Typography>
+                <Typography variant='h6'>
+                  {tglAmbil} - {tglKembali}
+                </Typography>
               </div>
             </div>
-            <MobilOrderCard
-              namaMobil='Toyota Agya'
-              tipePerseneling='Automatic'
-              jumlahPenumpang={4}
-              harga={200000}
-            />
-            <MobilOrderCard
-              namaMobil='Toyota Agya'
-              tipePerseneling='Automatic'
-              jumlahPenumpang={4}
-              harga={200000}
-            />
-            <MobilOrderCard
-              namaMobil='Toyota Agya'
-              tipePerseneling='Automatic'
-              jumlahPenumpang={4}
-              harga={200000}
-            />
-            <MobilOrderCard
-              namaMobil='Toyota Agya'
-              tipePerseneling='Automatic'
-              jumlahPenumpang={4}
-              harga={200000}
-            />
-            <MobilOrderCard
-              namaMobil='Toyota Agya'
-              tipePerseneling='Automatic'
-              jumlahPenumpang={4}
-              harga={200000}
-            />
-            <MobilOrderCard
-              namaMobil='Toyota Agya'
-              tipePerseneling='Automatic'
-              jumlahPenumpang={4}
-              harga={200000}
-            />
+            {mobils?.map((mobil: Mobil) => (
+              <MobilOrderCard
+                key={mobil.ID}
+                id={mobil.ID}
+                namaMobil={mobil.nama}
+                tipePerseneling={mobil.tipe_persneling ?? ''}
+                jumlahPenumpang={mobil.kapasitas_penumpang}
+                harga={mobil.price}
+                dataMobil={mobil}
+              />
+            ))}
           </div>
         </div>
       </section>

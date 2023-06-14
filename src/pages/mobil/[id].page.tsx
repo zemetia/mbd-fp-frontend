@@ -18,10 +18,11 @@ export default function MobilDetailPage() {
   const [mobil, setMobil] = useState<Mobil>();
   const router = useRouter();
   const mobilId = (router.query.id ?? '').toString();
+  const mobilDataStr = (router.query.data ?? '').toString();
 
   const { mutate, isLoading } = useMutationToast<void, Mobil>(
     useMutation(async (data) => {
-      const res = await api.get(`/mobil/${data.id}`);
+      const res = await api.get(`/mobil/${data.ID}`);
       setMobil(res.data.data);
 
       return res;
@@ -29,7 +30,8 @@ export default function MobilDetailPage() {
   );
 
   useEffect(() => {
-    mutate({ id: mobilId } as Mobil);
+    if (mobilDataStr == '') mutate({ ID: mobilId } as Mobil);
+    else setMobil(JSON.parse(mobilDataStr));
   }, []);
 
   return (
@@ -80,11 +82,11 @@ export default function MobilDetailPage() {
                 className='font-semibold mb-3 flex justify-between w-full pb-3 border-b-2 border-gray-200'
               >
                 <span>{mobil?.nama ?? ''}</span>
-                <span>{mobil?.pelat_no ?? ''}</span>
+                <span>{mobil?.pelat ?? ''}</span>
               </Typography>
               <div className='flex flex-row gap-2 align-middle'>
                 <RiSteering2Fill className='h-auto' />
-                {mobil?.tipe_mesin_id ?? 1}
+                {mobil?.tipe_persneling ?? 'Kereta Kuda'}
               </div>
               <div className='flex flex-row gap-2 align-middle'>
                 <BsFillPeopleFill className='h-auto' />
