@@ -1,29 +1,29 @@
-export type UninterceptedApiError = {
-  code: number;
-  status: string;
-  message: string | Record<string, string[]>;
-};
-
 export type ApiReturn<T> = {
-  code: string;
-  status: string;
+  success: boolean;
+  message: string;
   data: T;
+  code?: number;
 };
 
 export type ApiError = {
-  code: number;
-  status: string;
   message: string;
+  code: number;
+  success: boolean;
 };
 
-export interface PaginatedApiResponse<DataType, metaType> {
+export type UninterceptedApiError = {
+  message: string | Record<string, string[]>;
+};
+
+type PaginateData<Data> = {
+  data_per_page: Data;
+  meta: {
+    page: number;
+    max_page: number;
+  };
+};
+export interface PaginatedApiResponse<DataType> {
   code: number;
-  status: string;
-  data: DataType;
-  meta:
-    | ({
-        last_page: number;
-        total: number;
-      } & metaType)
-    | null;
+  success: string;
+  data: PaginateData<DataType>;
 }

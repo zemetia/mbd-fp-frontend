@@ -17,6 +17,7 @@ enum ButtonVariant {
   'yellow',
   'green',
   'black',
+  'outline',
   'discolored',
 }
 
@@ -51,7 +52,7 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
         className={clsxm(
           'button inline-flex items-center justify-center rounded-md md:rounded-lg',
           'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
-          'transition-colors duration-75',
+          'transition duration-200 ease-in-out',
           //#region  //*=========== Size ===========
           [
             size === 'large' && [
@@ -93,6 +94,12 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
               'hover:bg-gray-800',
               'active:bg-gray-900',
               'disabled:bg-gray-800 disabled:brightness-90 disabled:hover:bg-gray-800',
+            ],
+            variant === 'outline' && [
+              'border border-outline-base duration-250 text-typo-secondary',
+              'hover:bg-base-surface',
+              'active:bg-base-outlineborder',
+              'disabled:bg-base-outline',
             ],
             variant === 'discolored' && [
               'bg-tainted-200 text-discolored-1000',

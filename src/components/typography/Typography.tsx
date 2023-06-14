@@ -17,12 +17,16 @@ enum TypographyVariant {
   'c',
 }
 
-enum TypographyColor {
+export enum TypographyColor {
+  'DEFAULT',
   'primary',
   'secondary',
   'tertiary',
   'danger',
   'success',
+  'warning',
+  'skyblue',
+  'purple',
 }
 
 enum FontVarinat {
@@ -75,9 +79,11 @@ export default function Typography<T extends React.ElementType>({
         [
           color === 'primary' && ['text-typo'],
           color === 'secondary' && ['text-typo-secondary'],
-          color === 'tertiary' && ['text-typo-tertiary'],
-          color === 'danger' && ['text-danger-400'],
+          color === 'danger' && ['text-critical-600'],
           color === 'success' && ['text-success-600'],
+          color === 'warning' && ['text-warning-600'],
+          color === 'skyblue' && ['text-[#30B1FE]'],
+          color === 'purple' && ['text-[#713BDB]'],
         ],
         //#endregion  //*======== Color ===========
         [

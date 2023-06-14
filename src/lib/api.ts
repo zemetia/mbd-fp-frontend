@@ -1,26 +1,27 @@
 import axios, { AxiosError } from 'axios';
-import { GetServerSidePropsContext } from 'next/types';
+import { GetServerSidePropsContext } from 'next';
+import requestIp from 'request-ip';
 import Cookies from 'universal-cookie';
 
-const isServer = () => typeof window === 'undefined';
 import { getToken } from '@/lib/cookies';
 import { UninterceptedApiError } from '@/types/api';
-const context = <GetServerSidePropsContext>{};
 
-const baseURL =
-  process.env.NEXT_PUBLIC_RUN_MODE === 'local'
-    ? process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL
-    : process.env.NEXT_PUBLIC_RUN_MODE === 'vercel'
-    ? process.env.NEXT_PUBLIC_BACKEND_URL_VERCEL
-    : process.env.NEXT_PUBLIC_BACKEND_URL;
+const isServer = () => {
+  return typeof window === 'undefined';
+};
+let context = <GetServerSidePropsContext>{};
 
 export const api = axios.create({
-  baseURL,
+  baseURL:
+    process.env.NODE_ENV === 'development'
+      ? process.env.NEXT_PUBLIC_API_DEVELOPMENT_URL
+      : process.env.NEXT_PUBLIC_API_PRODUCTION_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-
   withCredentials: false,
+  timeout: 12000,
+  timeoutErrorMessage: 'Tidak Ada Jaringan',
 });
 
 api.defaults.withCredentials = false;
@@ -34,8 +35,18 @@ api.interceptors.request.use(function (config) {
         throw 'Api Context not found. You must call `setApiContext(context)` before calling api on server-side';
 
       const cookies = new Cookies(context.req?.headers.cookie);
-      token = cookies.get('@myevent/token');
+      const detectedIp = requestIp.getClientIp(context.req);
+      // if in production
+      if (
+        detectedIp &&
+        process.env.NEXT_PUBLIC_STATUS_PRODUCTION === 'production'
+      ) {
+        config.headers['X-Forwarded-For'] = detectedIp;
+      }
+      /** Get cookies from context if server side */
+      token = cookies.get('@ami-drive/token');
     } else {
+      /** Get cookies from context if server side */
       token = getToken();
     }
 
@@ -69,4 +80,13 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+/**
+ * Must be set when calling api on server side
+ */
+export const setApiContext = (_context: GetServerSidePropsContext) => {
+  context = _context;
+  return;
+};
+
 export default api;

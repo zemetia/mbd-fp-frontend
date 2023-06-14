@@ -131,6 +131,7 @@ export default function BaseDialog({
               <div className='mt-5 sm:flex sm:flex-row-reverse sm:mt-4'>
                 <Button
                   onClick={onSubmit}
+                  variant='green'
                   className={clsx(
                     '!font-medium justify-center items-center w-full sm:ml-3 sm:w-auto sm:text-sm'
                   )}
@@ -139,7 +140,6 @@ export default function BaseDialog({
                 </Button>
                 <Button
                   type='button'
-                  variant='outline'
                   onClick={onClose}
                   className='!font-medium justify-center items-center mt-3 w-full sm:mt-0 sm:w-auto sm:text-sm'
                 >

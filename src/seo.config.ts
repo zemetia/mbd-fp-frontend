@@ -5,22 +5,23 @@ import { DefaultSeoProps } from 'next-seo';
 const config: DefaultSeoProps = {
   openGraph: {
     type: 'website',
-    locale: 'en_IE',
-    url: '',
-    siteName: 'SiteName',
+    locale: 'in_ID',
+    url: 'https://www.expo-its.com',
+    siteName: 'AmiDrive',
   },
   twitter: {
-    handle: '@handle',
-    site: '@site',
+    handle: '@ITS_EXPO',
+    site: 'https://twitter.com/ITS_EXPO',
     cardType: 'summary_large_image',
   },
-  titleTemplate: '%s Zemetia',
-  description: 'Yoel Mountanus Sitorus Portofolio',
-  defaultTitle: 'Zemetia',
+  titleTemplate: '%s | AmiDrive',
+  description:
+    'Sebuah acara yang mewadahi seluruh Keluarga Mahasiswa ITS untuk mempertunjukan hasil pemikirannya kepada masyarakat umum yang diharapkan membawa kebermanfaatan nyata untuk masyarakat.',
+  defaultTitle: 'AmiDrive',
   additionalLinkTags: [
     {
       rel: 'icon',
-      href: '/images/cv-64px.png',
+      href: '/images/favicon.ico',
     },
   ],
 };
