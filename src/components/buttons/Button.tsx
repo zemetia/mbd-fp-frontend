@@ -5,14 +5,17 @@ import { ImSpinner2 } from 'react-icons/im';
 import clsxm from '@/lib/clsxm';
 
 enum ButtonVariant {
-  'primary',
+  'red',
+  'yellow',
+  'green',
   'outline',
-  'danger',
-  'ghost',
+  'basic',
+  'discolored',
 }
 enum ButtonSize {
-  'sm',
+  'small',
   'base',
+  'large',
 }
 
 type ButtonProps = {
@@ -33,7 +36,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled: buttonDisabled,
       isLoading,
       size = 'base',
-      variant = 'primary',
+      variant = 'red',
       leftIcon: LeftIcon,
       rightIcon: RightIcon,
       leftIconClassName,
@@ -50,44 +53,60 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         type='button'
         disabled={disabled}
         className={clsxm(
-          'button inline-flex items-center justify-center rounded-lg',
+          'button inline-flex items-center justify-center rounded-md md:rounded-lg',
           'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
           'transition-colors duration-75',
           //#region  //*=========== Size ===========
           [
-            size === 'base' && [
-              'min-h-[34px] py-1.5 px-2.5 font-bold md:min-h-[42px] md:py-2 md:px-3',
-              'text-sm md:text-base',
+            size === 'large' && [
+              'min-h-[34px] py-2 px-[18px] font-semibold md:min-h-[38px] md:py-2.5 md:px-6',
+              'md:text-lg',
             ],
-            size === 'sm' && [
-              'min-h-[30px] py-1 px-1.5 font-semibold md:min-h-[34px] md:py-1.5 md:px-2',
+            size === 'base' && [
+              'min-h-[30px] py-1.5 px-[14px] font-semibold md:min-h-[34px] md:py-2 md:px-5',
+              'text-sm ',
+            ],
+            size === 'small' && [
+              'min-h-[26px] py-0.5 px-[10px] font-medium md:min-h-[30px] md:py-1.5 md:px-4',
               'text-xs md:text-sm',
             ],
           ],
           //#endregion  //*======== Size ===========
           //#region  //*=========== Variants ===========
           [
-            variant === 'primary' && [
-              'border border-blue-500',
-              'disabled:bg-blue-100 disabled:border-blue-300',
-              'hover:bg-blue-600 active:bg-blue-700 hover:text-white',
+            variant === 'red' && [
+              'bg-critical-600 text-white',
+              'hover:bg-critical-700',
+              'active:bg-critical-800',
+              'disabled:bg-critical-700 disabled:brightness-90 disabled:hover:bg-critical-700',
+            ],
+            variant === 'yellow' && [
+              'bg-warning-600 text-white',
+              'hover:bg-warning-700',
+              'active:bg-warning-800',
+              'disabled:bg-warning-700 disabled:brightness-90 disabled:hover:bg-warning-700',
+            ],
+            variant === 'green' && [
+              'bg-success-600 text-white',
+              'hover:bg-success-700',
+              'active:bg-success-800',
+              'disabled:bg-success-700 disabled:brightness-90 disabled:hover:bg-success-700',
             ],
             variant === 'outline' && [
-              'text-typo-secondary',
-              'border border-typo-outline',
-              'hover:bg-secondary-200 active:bg-secondary-400',
-              'disabled:bg-secondary-300 disabled:brightness-95',
+              '!text-typo-secondary',
+              'border border-outline-base duration-250',
+              'hover:bg-base-surface active:bg-base-outline disabled:bg-base-outline',
             ],
-            variant === 'danger' && [
-              'bg-danger-400 text-white',
-              'shadow-d-100 hover:shadow-d-200 disabled:hover:shadow-d-100',
-              'hover:bg-danger-600 active:bg-danger-700',
-              'disabled:bg-danger-700 disabled:brightness-95',
+            variant === 'basic' && [
+              '!text-typo-secondary',
+              'shadow-none duration-250',
+              'hover:bg-base-surface active:bg-base-outline disabled:bg-base-outline',
             ],
-            variant === 'ghost' && [
-              'bg-clear text-typo-secondary',
-              'hover:bg-secondary-200',
-              'active:bg-secondary-400 disabled:bg-secondary-400 disabled:brightness-95',
+            variant === 'discolored' && [
+              'bg-tainted-200 text-discolored-1000',
+              'hover:bg-tainted-600',
+              'active:bg-tainted-700',
+              'disabled:bg-tainted-600 disabled:brightness-90 disabled:hover:bg-tainted-700',
             ],
           ],
           //#endregion  //*======== Variants ===========
@@ -101,11 +120,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {isLoading && (
           <div
             className={clsxm(
-              'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
-              [
-                ['primary', 'danger'].includes(variant) && 'text-white',
-                ['outline', 'ghost'].includes(variant) && 'text-gray-500',
-              ]
+              'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white'
             )}
           >
             <ImSpinner2 className='animate-spin' />
@@ -117,8 +132,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <LeftIcon
               className={clsxm(
                 [
+                  size === 'large' && 'text-xl md:text-2xl',
                   size === 'base' && 'text-lg md:text-xl',
-                  size === 'sm' && 'text-sm md:text-lg',
+                  size === 'small' && 'text-sm md:text-lg',
+                ],
+                [
+                  variant === 'outline' && 'text-typo-white',
+                  variant == 'basic' && 'text-typo-white',
                 ],
                 leftIconClassName
               )}
@@ -131,13 +151,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <RightIcon
               className={clsxm(
                 [
+                  size === 'large' && 'text-xl md:text-2xl',
                   size === 'base' && 'text-lg md:text-xl',
-                  size === 'sm' && 'text-sm md:text-lg',
+                  size === 'small' && 'text-sm md:text-lg',
                 ],
                 [
-                  variant === 'primary' && 'text-primary-100',
-                  variant === 'danger' && 'text-danger-100',
-                  ['outline', 'ghost'].includes(variant) && 'text-typo-icons',
+                  variant === 'outline' && 'text-typo-icon',
+                  variant == 'basic' && 'text-typo-icon',
                 ],
                 rightIconClassName
               )}

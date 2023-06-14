@@ -12,19 +12,18 @@ export default function SEO({ title, description, ...rest }: SEOProps) {
       description={description}
       {...rest}
       openGraph={{
-        // ! TODO: Change this to your own
         type: 'website',
         url: process.env.NEXT_PUBLIC_URL,
-        title: 'IFITS FRS',
-        siteName: 'IFITS FRS',
+        title: 'ITS EXPO 2023',
+        siteName: 'ITS EXPO 2023',
         description:
-          'Filtering dan Merancang FRS untuk mahasiswa Teknik Informatika ITS Surabaya.',
+          "Rangkaian Kreativitas Keluarga Mahasiswa ITS dalam Acara 'Salam Seni, Ilmu, dan Budaya'",
         images: [
           {
             url: `${process.env.NEXT_PUBLIC_URL}/images/og-itsexpo.png`,
             width: 1200,
             height: 627,
-            alt: 'IFITS FRS',
+            alt: 'ITS EXPO 2023',
           },
         ],
       }}

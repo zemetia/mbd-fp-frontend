@@ -12,10 +12,48 @@ const breadcrumbs = {
   '/dashboard/admin/permission': 'Permission',
   '/dashboard/admin/url-shortener': 'URL Shortener',
   '/dashboard/admin/url-shortener/generate': 'Generate',
+  '/dashboard/admin/data-management/': 'Data Management',
+  '/dashboard/admin/data-management/jurnalistik': 'Jurnalistik',
+  '/dashboard/admin/data-management/jurnalistik/detail': 'Detail',
+  '/dashboard/admin/data-management/kti': 'KTI',
+  '/dashboard/admin/data-management/kti/detail': 'Detail',
+  '/dashboard/admin/data-management/robotika': 'Robotika',
+  '/dashboard/admin/data-management/robotika/detail': 'Detail',
+  '/dashboard/admin/main-event/wahana-seni': 'Wahana Seni',
+  '/dashboard/admin/main-event/wahana-seni/2d': '2D',
+  '/dashboard/admin/main-event/wahana-seni/3d': '3D',
+
+  // Pengumuman
+  '/dashboard/admin/announcement': 'Pengumuman',
+  '/dashboard/admin/announcement/detail': 'Detail',
+  '/dashboard/admin/announcement/buat': 'Buat',
 
   // User
-  '/dashboard/pre-event/jurnalistik': 'Jurnalistik',
-  '/dashboard/pre-event/jurnalistik/pendaftaran': 'Pendaftaran Jurnalistik',
+  '/dashboard/pre-event/jurnalistik': 'Journalistic',
+  '/dashboard/pre-event/jurnalistik/main': 'Dashboard',
+  '/dashboard/pre-event/jurnalistik/join': 'Join Team',
+  '/dashboard/pre-event/jurnalistik/pendaftaran': 'Pendaftaran',
+  '/dashboard/pre-event/jurnalistik/pembayaran': 'Pembayaran',
+
+  // Robotik
+  '/dashboard/pre-event/robotika': 'Robot In Action',
+  '/dashboard/pre-event/robotika/join': 'Join',
+  '/dashboard/pre-event/robotika/pendaftaran': 'Pendaftaran',
+  '/dashboard/pre-event/robotika/main': 'Dashboard',
+  '/dashboard/pre-event/robotika/pembayaran': 'Pembayaran',
+
+  // KTI
+  '/dashboard/pre-event/kti': 'KTI',
+  '/dashboard/pre-event/kti/main': 'Dashboard',
+  '/dashboard/pre-event/kti/pendaftaran': 'Pendaftaran',
+  '/dashboard/pre-event/kti/pembayaran': 'Pembayaran',
+
+  // Whana Seni
+  '/dashboard/main-event/wahana-seni': 'Wahana Seni',
+  '/dashboard/main-event/wahana-seni/main': 'Dashboard',
+  '/dashboard/main-event/wahana-seni/pendaftaran-3d': 'Pendaftaran',
+  '/dashboard/main-event/wahana-seni/pendaftaran-2d': 'Pendaftaran',
+  '/dashboard/main-event/wahana-seni/karya': 'Sayembara Karya Mahasiswa',
 };
 type BreadcrumbProps = {
   crumbs: Array<keyof typeof breadcrumbs>;
@@ -37,7 +75,7 @@ export default function Breadcrumb({
           <PrimaryLink
             href={crumb}
             variant='success'
-            className='font-bold no-underline'
+            className='font-semibold no-underline'
           >
             {breadcrumbs[crumb]}
           </PrimaryLink>
